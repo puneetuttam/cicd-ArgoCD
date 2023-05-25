@@ -211,3 +211,8 @@ Enter the Administrator password in jenkins
   ```
   Enter your **Access key** and **Secret key** and **Region**
   
+  ## Create EKS
+  ## Update config file of kubernetes
+  ## Install Argocd
+  
+  
