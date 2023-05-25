@@ -1,12 +1,21 @@
-# Spring Boot based Java web application
- 
-This is a simple Sprint Boot based Java application that can be built using Maven. Sprint Boot dependencies are handled using the pom.xml 
-at the root directory of the repository.
+# Jenkins CI/CD pipeline to deploy Spring Boot java based web application on EKS using ArgoCD
 
-This is a MVC architecture based application where controller returns a page with title and message attributes to the view.
+This pipeline will have multiple stages which are as follows
 
-## Installation on EC2 Instance
-Install Jenkins, configure Docker as agent.
+-Git Checkout
+-Maven Build
+-Code Analysis Tool for code smells(SonarQube)
+-Docker Image Build
+-Docker Image Push to Dockerhub
+-Updating image in Deployment manifest file
+
+Apart from all this we will have OLM(operator Life Manager) to manage Argocd Opertor that we will install in our Ec2 Machine
+
+Also, we are gonna create EKS in which we will deploy our application
+
+
+## Create a EC2 instance 
+
 
 ## AWS EC2 Instance
 Go to AWS Console
