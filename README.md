@@ -3,11 +3,11 @@
 This pipeline will have multiple stages which are as follows
 
 - Git Checkout
--Maven Build
--Code Analysis Tool for code smells(SonarQube)
--Docker Image Build
--Docker Image Push to Dockerhub
--Updating image in Deployment manifest file
+- Maven Build
+- Code Analysis Tool for code smells(SonarQube)
+- Docker Image Build
+- Docker Image Push to Dockerhub
+- Updating image in Deployment manifest file
 
 Apart from all this we will have OLM(operator Life Manager) to manage Argocd Opertor that we will install in our Ec2 Machine
 
