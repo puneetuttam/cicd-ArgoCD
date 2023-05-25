@@ -15,6 +15,14 @@ Also, we are gonna create EKS in which we will deploy our application
 
 
 ## Create a EC2 instance 
+- Go to AWS Console
+- Go to EC2 instance
+- Go to Launch Instance
+- Give any name to your EC2 machine
+- Select your AMI ( we are using Ubuntu)
+- Select instance type as t2.medium or higher
+- You can select defaul Networking configuration
+- Hit launch Instance
 
 
 ## AWS EC2 Instance
