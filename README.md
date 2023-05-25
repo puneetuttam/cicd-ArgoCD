@@ -6,7 +6,7 @@ at the root directory of the repository.
 This is a MVC architecture based application where controller returns a page with title and message attributes to the view.
 
 ## Installation on EC2 Instance
-Install Jenkins, configure Docker as agent, set up cicd, deploy applications to k8s and much more.
+Install Jenkins, configure Docker as agent.
 
 ## AWS EC2 Instance
 Go to AWS Console
