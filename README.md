@@ -5,63 +5,56 @@ at the root directory of the repository.
 
 This is a MVC architecture based application where controller returns a page with title and message attributes to the view.
 
-## Execute the application locally and access it using your browser
+## Installation on EC2 Instance
+Install Jenkins, configure Docker as agent, set up cicd, deploy applications to k8s and much more.
 
-Checkout the repo and move to the directory
+## AWS EC2 Instance
+Go to AWS Console
+Instances(running)
+Launch instances
 
-```
-git clone https://github.com/iam-veeramalla/Jenkins-Zero-To-Hero/java-maven-sonar-argocd-helm-k8s/sprint-boot-app
-cd java-maven-sonar-argocd-helm-k8s/sprint-boot-app
-```
+## Install Jenkins.
+Pre-Requisites:
 
-Execute the Maven targets to generate the artifacts
-
-```
-mvn clean package
-```
-
-The above maven target stroes the artifacts to the `target` directory. You can either execute the artifact on your local machine
-(or) run it as a Docker container.
-
-** Note: To avoid issues with local setup, Java versions and other dependencies, I would recommend the docker way. **
-
-
-### Execute locally (Java 11 needed) and access the application on http://localhost:8080
+Java (JDK)
+Run the below commands to install Java and Jenkins
+Install Java
 
 ```
-java -jar target/spring-boot-web.jar
+sudo apt update
+sudo apt install openjdk-11-jre
 ```
 
-### The Docker way
-
-Build the Docker Image
-
+Verify Java is Installed
 ```
-docker build -t ultimate-cicd-pipeline:v1 .
+java -version
 ```
-
+Now, you can proceed with installing Jenkins
 ```
-docker run -d -p 8010:8080 -t ultimate-cicd-pipeline:v1
+curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
 ```
+Now, Jenkins runs on port 8080 but it is not accessible to outer world so open port for 8080 in security group.
 
-Hurray !! Access the application on `http://<ip-address>:8010`
 
 
-## Next Steps
+EC2 > Instances > Click on
+In the bottom tabs -> Click on Security
+Security groups
+Add inbound traffic rules (you can just allow TCP 8080, in my case, I allowed All traffic).
 
-### Configure a Sonar Server locally
 
+## Login to Jenkins using the below URL:
+http://<ip-address>:8080 [You can get the ec2-instance-public-ip-address from your AWS EC2 console page]
+
+After you login to Jenkins Run the command to copy the Jenkins Admin Password 
+``` 
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
-apt install unzip
-adduser sonarqube
-wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
-unzip *
-chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
-chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
-cd sonarqube-9.4.0.54424/bin/linux-x86-64/
-./sonar.sh start
-```
-
-Hurray !! Now you can access the `SonarQube Server` on `http://<ip-address>:9000` 
-
+Enter the Administrator password in jenkins
 
