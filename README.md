@@ -214,6 +214,9 @@ Enter the Administrator password in jenkins
   ## Create EKS
   
   ## Update config file of kubernetes
+  ```
+  aws eks update-kubeconfig --region region-code --name my-cluster
+  ```
   
   ## Install Argocd
   Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
@@ -239,7 +242,7 @@ Enter the Administrator password in jenkins
   spec: {}
   ```
   Save the about content in argocd-basic.yaml
-Now, Create Argo CD cluster
+  Now, Create Argo CD cluster
   ```
   kubectl create  -f argocd-basic.yaml
   ```
