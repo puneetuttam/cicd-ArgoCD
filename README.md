@@ -231,12 +231,12 @@ Enter the Administrator password in jenkins
   The following example shows the most minimal valid manifest to create a new Argo CD cluster with the default configuration.
   ```
   apiVersion: argoproj.io/v1alpha1
-kind: ArgoCD
-metadata:
-  name: example-argocd
-  labels:
-    example: basic
-spec: {}
+  kind: ArgoCD
+  metadata:
+    name: example-argocd
+    labels:
+      example: basic
+  spec: {}
   ```
   Save the about content in argocd-basic.yaml
 Now, Create Argo CD cluster
