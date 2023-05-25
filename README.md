@@ -105,7 +105,34 @@ Enter the Administrator password in jenkins
   ```
 ## Installing and Configuring Sonar Server.
   
-  Run the below command to 
+  Run the below command to unzip package
+  ```
+  apt install unzip
+  ```
   
+  To add sonarqube user run
+  ```
+  adduser sonarqube
+  ```
   
+  Now, login as sonarqube user
+  ```
+  sudo su - sonarqube
+  ```
   
+ To download sonarqube binary
+ ```
+ wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.4.0.54424.zip
+ unzip *
+ ```
+ Give required permission to sonarqube
+ ```
+  chmod -R 755 /home/sonarqube/sonarqube-9.4.0.54424
+  chown -R sonarqube:sonarqube /home/sonarqube/sonarqube-9.4.0.54424
+ ```
+ Now Start your sonarqube server
+ ```
+  cd sonarqube-9.4.0.54424/bin/linux-x86-64/
+  ./sonar.sh start
+ ``` 
+   Now you can access the SonarQube Server on http://<ip-address>:9000
