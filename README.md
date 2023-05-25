@@ -247,5 +247,23 @@ Enter the Administrator password in jenkins
   kubectl create  -f argocd-basic.yaml
   ```
   ## Create app in Argocd
+  - click on Create App
+  - Give Application Name
+  - Select project name as dfault
+  - Sync Policy as Automatic
+  - Under source provide your git repo URL
+  - Under path give path of Manifest directory
+  - Give namespace as default
+Your Deployment has been done now 
+## Now to access the application 
+  - Go to your ec2 machine
+  - Run following command
+  ```
+  kubectl get svc 
+  ```
+  - Copy the External IP and paste in browser. 
+
+# Thanks :)
+ 
   
   
