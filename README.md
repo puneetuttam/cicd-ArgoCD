@@ -105,5 +105,7 @@ Enter the Administrator password in jenkins
   ```
 ## Installing and Configuring Sonar Server.
   
+  Run the below command to 
+  
   
   
