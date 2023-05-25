@@ -2,7 +2,7 @@
 
 This pipeline will have multiple stages which are as follows
 
--Git Checkout
+- Git Checkout
 -Maven Build
 -Code Analysis Tool for code smells(SonarQube)
 -Docker Image Build
