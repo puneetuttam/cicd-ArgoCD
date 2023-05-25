@@ -212,7 +212,37 @@ Enter the Administrator password in jenkins
   Enter your **Access key** and **Secret key** and **Region**
   
   ## Create EKS
+  
   ## Update config file of kubernetes
+  
   ## Install Argocd
+  Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
+  ```
+  curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.24.0/install.sh | bash -s v0.24.0
+  ```
+  Install the operator by running the following command:
+  ```
+  kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
+  ```
+  After install, watch your operator come up using next command.
+  ```
+  kubectl get csv -n operators
+  ```
+  The following example shows the most minimal valid manifest to create a new Argo CD cluster with the default configuration.
+  ```
+  apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: example-argocd
+  labels:
+    example: basic
+spec: {}
+  ```
+  Save the about content in argocd-basic.yaml
+Now, Create Argo CD cluster
+  ```
+  kubectl create  -f argocd-basic.yaml
+  ```
+  ## Create app in Argocd
   
   
