@@ -22,19 +22,20 @@ Also, we are gonna create EKS in which we will deploy our application
 - Select your AMI ( we are using Ubuntu)
 - Select instance type as t2.medium or higher
 - You can select defaul Networking configuration
-- Hit launch Instance
+- Now, Hit Launch Instance
 
 
-## AWS EC2 Instance
-Go to AWS Console
-Instances(running)
-Launch instances
+## Connect to your Ec2 Instance.
+- Go to AWS Console
+- Instances(running)
+- Select your instances
+- Connect
 
 ## Install Jenkins.
-Pre-Requisites:
+Now, we will install jenkins in our machine but for it we need java as Pre-Requisites
 
-Java (JDK)
-Run the below commands to install Java and Jenkins
+- Java (JDK)
+Run the below commands to install Java.
 Install Java
 
 ```
@@ -56,14 +57,16 @@ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
 sudo apt-get update
 sudo apt-get install jenkins
 ```
-Now, Jenkins runs on port 8080 but it is not accessible to outer world so open port for 8080 in security group.
+
+**NOTE:** Now, Jenkins runs on port 8080 but it is not accessible to outer world so open port for 8080 in security group.
 
 
-
-EC2 > Instances > Click on
-In the bottom tabs -> Click on Security
-Security groups
-Add inbound traffic rules (you can just allow TCP 8080, in my case, I allowed All traffic).
+## Modify Security Group
+- Go to AWS console
+- EC2 > Instances > Click on
+- In the bottom tabs -> Click on Security
+- Security groups
+- Add inbound traffic rules (you can just allow TCP 8080, in my case, I allowed All traffic).
 
 
 ## Login to Jenkins using the below URL:
@@ -74,4 +77,33 @@ After you login to Jenkins Run the command to copy the Jenkins Admin Password
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 Enter the Administrator password in jenkins
+  
 
+- Click on install Suggested Plugin
+- You can create a user or you can login as admin
+  
+## Installation of plugins in Jeknins
+- Go to Jenkins Dashboard
+- Manage Jenkins
+- Plugins
+- Select Available plugins
+- Install plugins **Docker Pipeline, Sonarqube Scanner**.
+  
+## Installation of Docker in our machine
+  Run the below command to intall docker
+  ```
+  sudo apt update
+  sudo apt install docker.io
+  ```
+## Grant Jenkins user and Ubuntu user permission to docker deamon.
+  Run the below command to provide permission
+  ```
+  sudo su - 
+  usermod -aG docker jenkins
+  usermod -aG docker ubuntu
+  systemctl restart docker
+  ```
+## Installing and Configuring Sonar Server.
+  
+  
+  
