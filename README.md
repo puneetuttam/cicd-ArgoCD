@@ -136,3 +136,78 @@ Enter the Administrator password in jenkins
   ./sonar.sh start
  ``` 
    Now you can access the SonarQube Server on http://your-ip-address:9000
+  
+  Now we will configure some credential in jenkins
+  ## Generate Github Token
+    - Go to www.github.com
+    - Login to your account
+    - Go to setting
+    - Select developer Setting
+    - Go to Personal Access Token > Tokens(classic)
+    - Generate new Token > Generate new Token(classic)
+    - Enter you github password
+    - Give any note to it
+    - Tick repo
+    - Generate Token
+    
+  ## Configure Github Token in Jenkins
+    - Go to jenkins Dashboard
+    - Manage jenkins
+    - Go to Credentials under security section
+    - Under Stores scoped to Jenkins select system
+    - Select global Credentials
+    - Add Credentials
+    - Under Kind Select Secret Text
+    - Enter git token under secret
+    - Give id name 
+    - Create
+  
+  ## Configure DockerHub Crential in Jenkins
+     - Go to jenkins Dashboard
+    - Manage jenkins
+    - Go to Credentials under security section
+    - Under Stores scoped to Jenkins select system
+    - Select global Credentials
+    - Add Credentials
+    - Under Kind Username and Password
+    - Enter Username and Password
+    - Give id name 
+    - Create
+  ## Similarly as above you can configure Credentials for SonarQube as well
+
+  # Now will do Deployment 
+  There are some pre-requisite before deployment which are as follows
+   ## Install aws cli
+    ```
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip awscliv2.zip
+    sudo ./aws/install
+    ```
+  ## Install Kubectl 
+  - To download latest release of Kubectl 
+    ```
+     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    ```
+  - Download kubectl checksum file
+    ```
+     curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+    ```
+  - Validate the kubectl binary against the checksum file:
+    ```
+    echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+    ```
+  - To install kubectl
+    ```
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+    ```
+  - Test to ensure the version you installed is up-to-date:
+    ```
+    kubectl version --client
+    ```
+  ## Configure AWS cli
+  To configure Aws cli
+  ```
+  aws configure
+  ```
+  Enter your **Access key** and **Secret key** and **Region**
+  
