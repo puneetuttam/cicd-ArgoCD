@@ -1,5 +1,8 @@
 # Jenkins CI/CD pipeline to deploy Spring Boot java based web application on EKS using ArgoCD
 
+![Untitled-2023-06-06-1424](https://github.com/puneetuttam/cicd-poc/assets/44168950/506e0844-1ce9-499b-a7ce-230610290b6c)
+
+
 This pipeline will have multiple stages which are as follows
 
 - Git Checkout
