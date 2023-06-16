@@ -1,0 +1,89 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+    }
+    environment {
+        SONAR_URL = "http://localhost:9000"
+        DOCKER_IMAGE = "puneetuttam/jenkins:image${BUILD_NUMBER}"
+        REGISTRY_CREDENTIALS = credentials('Docker-Cred')
+        GIT_REPO_NAME = "cicd-poc"
+        GIT_USER_NAME = "puneetuttam"
+    }
+    stages {
+        stage('checkout') {
+            steps {
+                // Get some code from a GitHub repository
+                git credentialsId: 'Git-Cred', url: 'https://github.com/puneetuttam/cicd-poc'
+                
+               
+            }
+
+        }
+        stage('build'){
+            steps{
+                 sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+         stage('SonarQube') {
+            
+             steps {
+                 withCredentials([string(credentialsId: 'Sonar-Cred', variable: 'SONAR_AUTH_TOKEN')]) {
+                 sh 'mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                }
+            }
+        }
+        
+        stage('docker Build') {
+            
+            steps{
+                sh 'docker build -t $DOCKER_IMAGE .'
+            }
+        }
+        stage('docker push') {
+            steps{
+                script{
+                    def dockerImage = docker.image("${DOCKER_IMAGE}")
+                    docker.withRegistry('https://index.docker.io/v1/', "Docker-Cred") {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+        stage('Update Deployment File') {
+        
+            steps {
+                withCredentials([string(credentialsId: 'Git-Cred', variable: 'GITHUB_TOKEN')]) {
+                    sh '''
+                        rm -rf cicd-poc
+                        git clone https://github.com/puneetuttam/cicd-poc.git
+                        git config user.email "puneet.uttam.99@gmail.com"
+                        git config user.name "puneetuttam"
+                        cd cicd-poc
+                        cd Manifests
+                        sed -i "s/jenkins:.*/jenkins:image${BUILD_NUMBER}/g" deployment.yaml
+                        git add .
+                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME}
+                    '''
+                }
+            }
+        }
+    }
+    post {
+        always {
+            emailext attachLog: true, 
+            
+            body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+            Check console output at $BUILD_URL to view the results.''',
+            
+            subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!',
+            
+            to: 'puneet.uttam@nagarro.com;deeksha.arora@nagarro.com;aman.sindhu@nagarro.com;sonam.jain02@nagarro.com;'
+            
+        }
+    }
+    
+}
